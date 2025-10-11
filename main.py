@@ -36,7 +36,7 @@ import polls.new_profession as np
 class BotExceptionHandler(telebot.ExceptionHandler):
     def handle(self, exception):
         print('Произошла ошибка:', exception)
-        u.logging.warning(f'Ошибка polling. ', f'Error: {e}')
+        u.logging.warning(f'Ошибка polling. ', f'Error: {exception}')
         return True
 
 bot = telebot.TeleBot(u.get_from_env('TG_TOKEN'), exception_handler=BotExceptionHandler())
@@ -117,5 +117,5 @@ while True:
     try:
         bot.polling(none_stop=True)
     except Exception as e:
-        print('Ошбика polling:', e)
+        print('Ошибка polling:', e)
         continue
