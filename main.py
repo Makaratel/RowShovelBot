@@ -33,8 +33,13 @@ import polls.new_lands as nl
 import polls.new_chalets as nc
 import polls.new_profession as np
 
+class BotExceptionHandler(telebot.ExceptionHandler):
+    def handle(self, exception):
+        print('Произошла ошибка:', exception)
+        u.logging.warning(f'Ошибка polling. ', f'Error: {e}')
+        return True
 
-bot = telebot.TeleBot(u.get_from_env('TG_TOKEN'))
+bot = telebot.TeleBot(u.get_from_env('TG_TOKEN'), exception_handler=BotExceptionHandler())
 u.bot = btn.bot = hg.bot = hc.bot = hl.bot = ha.bot = ng.bot = nb.bot = ca.bot = ns.bot = nbnds.bot = nd.bot = na.bot = nf.bot = ny.bot = nm.bot = nfl.bot = nl.bot = nc.bot = np.bot = bot
 hg.curr_poll = curr_poll = None
 d.DAO.bd_task(d.DAO.create_table)
@@ -107,5 +112,10 @@ def check_menu_game(message):
         bot.send_message(message.chat.id, 'я есть грут', message_effect_id=5107584321108051014)
     elif all([m1, m2, m3, m4]):
         bot.send_message(message.chat.id, 'Такой команды не существует! Попробуйте вновь.')
-
-bot.polling(none_stop=True)
+    
+while True:
+    try:
+        bot.polling(none_stop=True)
+    except Exception as e:
+        print('Ошбика polling:', e)
+        continue
