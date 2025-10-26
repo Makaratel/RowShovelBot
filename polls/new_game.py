@@ -16,6 +16,26 @@ def set_property(message, type, bd_callback, next_step = '', text = '', is_end =
 
 def new_game(message):
     d.DAO.bd_task(d.DAO.create_user, message.chat.id, user_id = message.from_user.id)
+    d.DAO.bd_task(d.DAO.set_world, message.chat.id, c.WORLD1.lower())
+    d.DAO.bd_task(d.DAO.set_marriage, message.chat.id, False)
+    d.DAO.bd_task(d.DAO.set_childs, message.chat.id, 0)
+    d.DAO.bd_task(d.DAO.set_wishes, message.chat.id, 0)
+    d.DAO.bd_task(d.DAO.set_turn, message.chat.id, 0)
+    d.DAO.bd_task(d.DAO.set_id_last_active, message.chat.id, 0)
+    d.DAO.bd_task(d.DAO.set_debt, message.chat.id, 0)
+    d.DAO.bd_task(d.DAO.set_small_business, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_medium_business, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_big_business, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_stocks, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_bonds, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_deposits, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_autos, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_flats, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_lands, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_chalets, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_yachts, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_flies, message.chat.id, '[]')
+    d.DAO.bd_task(d.DAO.set_mansions, message.chat.id, '[]')
     bot.register_next_step_handler(message, set_profession)
     bot.send_message(message.chat.id, c.BALANCE_Q1, reply_markup=c.MARKUP_NULL)
 
@@ -68,7 +88,7 @@ def get_balance(message, is_new = True):
         user = p.Person.get_data(message.chat.id) 
         total_income = user.salary + user.salary_extra
         total_outcome = user.cost_cloth + user.cost_extra + user.cost_food + user.cost_house + user.cost_transport
-        d.DAO.bd_task(d.DAO.set_turn, message.chat.id, 0)
+
         d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, total_income)
         d.DAO.bd_task(d.DAO.set_total_outcome, message.chat.id, total_outcome)
         d.DAO.bd_task(d.DAO.set_flow, message.chat.id, total_income - total_outcome)

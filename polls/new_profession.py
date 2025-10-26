@@ -22,4 +22,5 @@ def get_salary(message):
     d.DAO.bd_task(d.DAO.set_salary, message.chat.id, input_res)
     d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income + input_res)
     d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow + input_res)
+    bot.send_message(message.chat.id, 'Вы устроились на работу!')
     btn.menu_setter(message, btn.set_main_menu)

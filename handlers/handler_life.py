@@ -105,3 +105,4 @@ def to_work(message):
         d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income - user.salary)
         d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow - user.salary)
         d.DAO.bd_task(d.DAO.set_salary, message.chat.id, 0)
+        bot.send_message(message.chat.id, f'Вы уволены!')

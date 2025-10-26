@@ -62,11 +62,8 @@ def custom_logs():
 def get_input(message, type, text, curr_func):
     try:
         if type == 'int': input_res = abs(int(message.text.strip()))
-        elif type == 'str': input_res = message.text.strip().lower()
-        else: input_res = message.text.strip()
-        
+        if type == 'str': input_res = message.text.strip().lower()
         return input_res
     except ValueError:
-        get_error(message, text, curr_func)
-    except TypeError:
-        get_error(message, text, curr_func)
+        if type == 'int': get_error(message, c.ERROR1, curr_func)
+        if type == 'str': get_error(message, c.ERROR3, curr_func)

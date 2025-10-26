@@ -40,6 +40,7 @@ class BotExceptionHandler(telebot.ExceptionHandler):
         return True
 
 bot = telebot.TeleBot(u.get_from_env('TG_TOKEN'), exception_handler=BotExceptionHandler())
+#bot = telebot.TeleBot(u.get_from_env('TG_TOKEN'))
 u.bot = btn.bot = hg.bot = hc.bot = hl.bot = ha.bot = ng.bot = nb.bot = ca.bot = ns.bot = nbnds.bot = nd.bot = na.bot = nf.bot = ny.bot = nm.bot = nfl.bot = nl.bot = nc.bot = np.bot = bot
 hg.curr_poll = curr_poll = None
 d.DAO.bd_task(d.DAO.create_table)
@@ -93,7 +94,8 @@ def callback_messagge(callback):
 
     elif callback.data == 'about_bot':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
-        hg.about_bot(callback.message)
+        hg.curr_poll = 3
+        hg.curr_poll = hg.about_bot(callback.message, hg.curr_poll)
 
     elif callback.data == 'next':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
@@ -117,5 +119,6 @@ while True:
     try:
         bot.polling(none_stop=True)
     except Exception as e:
-        print('Ошибка polling:', e)
+        print('Произошла ошибка:', e)
+        u.logging.info(f'Ошибка polling. ', f'Error: {e}')
         continue
