@@ -55,7 +55,10 @@ TEXT_WELCOME3 = 'В данной игре важен не только игро�
             + 'в состоянии рефлексии, осмысляя свои собственные действия и их причины в спокойной обстановке 💆‍♂️'
 
 TEXT_WELCOME4 = 'Балансовая ведомость создана.\nВыберите дальнейшее действие!'
-TEXT_WELCOME5 = 'Пользователь не найден!\nБудует создана новая балансовая ведомость.'
+TEXT_WELCOME5 = 'Пользователь не найден!\nСоздайте новую балансовую ведомость или выберите из стандартных.'
+TEXT_WELCOME6 = 'Выберите способ создания балансовой ведомости.'
+TEXT_WELCOME7 = 'Выберите уровень дохода стандартной профессии.'
+TEXT_WELCOME8 = 'Выберите базовую профессию.'
 
 BALANCE_Q1 = '🔧 Введите вашу профессию'
 BALANCE_Q2 = '🚻 Введите пол персонажа (мужской/женский)'
@@ -104,7 +107,7 @@ BALANCE_23 = '🏭 Недвижимое имущество:'
 BALANCE_24 = '🪙 Депозиты:'
 BALANCE_25 = '💳 Кредиты:'
 BALANCE_26 = '⭕ Долги:'
-DELIMETER = '-------------------------------------------'
+DELIMETER = '-----------------------------------'
 
 BUSINESS_1 = 'Вначале продайте бизнесы другого уровня!'
 BUSINESS_2 = 'Введите название бизнеса'
@@ -165,3 +168,62 @@ ABOUT_3 = '''
 Он означает, что при нажатии на эту кнопку Вам откроется новое подменю для выбора.
 Карту кнопок меню и их взаимное положение Вы можете увидеть на картинке.
 '''
+
+PROFESSIONS = {
+    'lvl1': [
+        {'name': 'Охранник', 'cash': 100, 'salary': 250, 'salary_extra_name': 'Левак с остатков', 'salary_extra': 50, 'cost_house': 100, 'cost_food': 60, 'cost_transport': 10, 'cost_cloth': 20, 'cost_extra_name': 'Кроссоврды', 'cost_extra': 10},
+        {'name': 'Кладовщик', 'cash': 110, 'salary': 270, 'salary_extra_name': 'Неучтенка', 'salary_extra': 40, 'cost_house': 100, 'cost_food': 60, 'cost_transport': 20, 'cost_cloth': 10, 'cost_extra_name': 'Пазлы', 'cost_extra': 10},
+        {'name': 'Участковый', 'cash': 120, 'salary': 370, 'salary_extra_name': 'Все время в работе', 'salary_extra': 0, 'cost_house': 100, 'cost_food': 80, 'cost_transport': 20, 'cost_cloth': 10, 'cost_extra_name': 'Рыбалка', 'cost_extra': 40},
+        {'name': 'Продавец-кассир', 'cash': 130, 'salary': 300, 'salary_extra_name': 'Неучтенка', 'salary_extra': 30, 'cost_house': 110, 'cost_food': 60, 'cost_transport': 10, 'cost_cloth': 10, 'cost_extra_name': 'Любовные романы', 'cost_extra': 10},
+        {'name': 'Продавец-консультант', 'cash': 140, 'salary': 330, 'salary_extra_name': 'Процент от продаж', 'salary_extra': 60, 'cost_house': 120, 'cost_food': 60, 'cost_transport': 10, 'cost_cloth': 30, 'cost_extra_name': 'Мини-футбол', 'cost_extra': 30},
+        {'name': 'Кондуктор', 'cash': 150, 'salary': 290, 'salary_extra_name': 'Гид на выходные', 'salary_extra': 60, 'cost_house': 100, 'cost_food': 60, 'cost_transport': 10, 'cost_cloth': 10, 'cost_extra_name': 'Судоку', 'cost_extra': 20},
+        {'name': 'Водитель троллейбуса', 'cash': 160, 'salary': 360, 'salary_extra_name': 'Видеоблог', 'salary_extra': 50, 'cost_house': 110, 'cost_food': 80, 'cost_transport': 30, 'cost_cloth': 20, 'cost_extra_name': 'Детективные романы', 'cost_extra': 10},
+        {'name': 'Няня', 'cash': 170, 'salary': 400, 'salary_extra_name': 'Аниматор', 'salary_extra': 70, 'cost_house': 130, 'cost_food': 30, 'cost_transport': 20, 'cost_cloth': 70, 'cost_extra_name': 'Танцы на пилоне', 'cost_extra': 50},
+        {'name': 'Официант', 'cash': 180, 'salary': 280, 'salary_extra_name': 'Чаевые', 'salary_extra': 100, 'cost_house': 100, 'cost_food': 40, 'cost_transport': 20, 'cost_cloth': 20, 'cost_extra_name': 'Походы', 'cost_extra': 20},
+        {'name': 'Фармацевт', 'cash': 190, 'salary': 380, 'salary_extra_name': 'Спирт из-под полы', 'salary_extra': 60, 'cost_house': 120, 'cost_food': 80, 'cost_transport': 10, 'cost_cloth': 30, 'cost_extra_name': 'Ночные клубы', 'cost_extra': 10},
+        {'name': 'Учитель', 'cash': 200, 'salary': 400, 'salary_extra_name': 'Репетиторство', 'salary_extra': 100, 'cost_house': 100, 'cost_food': 100, 'cost_transport': 30, 'cost_cloth': 30, 'cost_extra_name': 'Театр', 'cost_extra': 40},
+        {'name': 'Сантехник', 'cash': 210, 'salary': 370, 'salary_extra_name': 'Муж на час', 'salary_extra': 90, 'cost_house': 100, 'cost_food': 60, 'cost_transport': 20, 'cost_cloth': 20, 'cost_extra_name': 'Скалолазание', 'cost_extra': 50},
+        {'name': 'Парикмахер', 'cash': 220, 'salary': 430, 'salary_extra_name': 'Макияж к прическам', 'salary_extra': 140, 'cost_house': 130, 'cost_food': 100, 'cost_transport': 60, 'cost_cloth': 20, 'cost_extra_name': 'Разведение фиалок', 'cost_extra': 40},
+        {'name': 'Крановщик', 'cash': 230, 'salary': 520, 'salary_extra_name': 'Видеоблог', 'salary_extra': 60, 'cost_house': 160, 'cost_food': 80, 'cost_transport': 50, 'cost_cloth': 40, 'cost_extra_name': 'Фотография', 'cost_extra': 20},
+        {'name': 'Сварщик', 'cash': 240, 'salary': 510, 'salary_extra_name': 'Прямые заказы', 'salary_extra': 80, 'cost_house': 140, 'cost_food': 80, 'cost_transport': 40, 'cost_cloth': 50, 'cost_extra_name': 'Конные прогулки', 'cost_extra': 40}
+    ],
+
+    'lvl2': [
+        {'name': 'Мастер маникюра', 'cash': 250, 'salary': 550, 'salary_extra_name': 'Постоянные клиенты', 'salary_extra': 100, 'cost_house': 170, 'cost_food': 110, 'cost_transport': 40, 'cost_cloth': 40, 'cost_extra_name': 'Караоке', 'cost_extra': 40},
+        {'name': 'Тренер по фитнесу', 'cash': 260, 'salary': 520, 'salary_extra_name': 'Продажа БАДов', 'salary_extra': 90, 'cost_house': 140, 'cost_food': 100, 'cost_transport': 40, 'cost_cloth': 40, 'cost_extra_name': 'Бассейн', 'cost_extra': 30},
+        {'name': 'Медработник', 'cash': 270, 'salary': 510, 'salary_extra_name': 'Уколы на дому', 'salary_extra': 60, 'cost_house': 120, 'cost_food': 70, 'cost_transport': 20, 'cost_cloth': 30, 'cost_extra_name': 'Рыбалка', 'cost_extra': 60},
+        {'name': 'Секретарь', 'cash': 280, 'salary': 500, 'salary_extra_name': 'Ручные поделки', 'salary_extra': 180, 'cost_house': 140, 'cost_food': 100, 'cost_transport': 60, 'cost_cloth': 70, 'cost_extra_name': 'Бисероплетение', 'cost_extra': 30},
+        {'name': 'Косметолог', 'cash': 290, 'salary': 590, 'salary_extra_name': 'Брови, массаж', 'salary_extra': 200, 'cost_house': 190, 'cost_food': 140, 'cost_transport': 50, 'cost_cloth': 70, 'cost_extra_name': 'Фотография', 'cost_extra': 50},
+        {'name': 'Тракторист', 'cash': 300, 'salary': 300, 'salary_extra_name': 'Калым', 'salary_extra': 300, 'cost_house': 130, 'cost_food': 100, 'cost_transport': 10, 'cost_cloth': 30, 'cost_extra_name': 'Чтение газет', 'cost_extra': 30},
+        {'name': 'Следователь', 'cash': 310, 'salary': 760, 'salary_extra_name': 'Честный человек', 'salary_extra': 0, 'cost_house': 160, 'cost_food': 130, 'cost_transport': 80, 'cost_cloth': 60, 'cost_extra_name': 'Игра на гитаре', 'cost_extra': 20},
+        {'name': 'Стоматолог', 'cash': 320, 'salary': 690, 'salary_extra_name': 'Мимо кассы', 'salary_extra': 130, 'cost_house': 260, 'cost_food': 170, 'cost_transport': 20, 'cost_cloth': 30, 'cost_extra_name': 'Скетчинг', 'cost_extra': 20},
+        {'name': 'Журналист', 'cash': 330, 'salary': 650, 'salary_extra_name': 'Блог о путешествиях', 'salary_extra': 80, 'cost_house': 100, 'cost_food': 150, 'cost_transport': 70, 'cost_cloth': 40, 'cost_extra_name': 'Нумизматика', 'cost_extra': 40},
+        {'name': 'Переводчик', 'cash': 340, 'salary': 340, 'salary_extra_name': 'Репетиторство', 'salary_extra': 300, 'cost_house': 100, 'cost_food': 100, 'cost_transport': 50, 'cost_cloth': 30, 'cost_extra_name': 'Вязание', 'cost_extra': 20},
+        {'name': 'Водитель фуры', 'cash': 350, 'salary': 750, 'salary_extra_name': 'Подвезти попутчика', 'salary_extra': 50, 'cost_house': 190, 'cost_food': 160, 'cost_transport': 20, 'cost_cloth': 50, 'cost_extra_name': 'Чтение фантастики', 'cost_extra': 30},
+        {'name': 'Дизайнер', 'cash': 360, 'salary': 670, 'salary_extra_name': 'Фриланс', 'salary_extra': 190, 'cost_house': 280, 'cost_food': 150, 'cost_transport': 20, 'cost_cloth': 30, 'cost_extra_name': 'Фитнес', 'cost_extra': 20},
+        {'name': 'Бухгалтер', 'cash': 370, 'salary': 770, 'salary_extra_name': 'Забот хватает', 'salary_extra': 0, 'cost_house': 100, 'cost_food': 150, 'cost_transport': 70, 'cost_cloth': 40, 'cost_extra_name': 'Бар по пятницам', 'cost_extra': 40},
+        {'name': 'Кондитер', 'cash': 380, 'salary': 650, 'salary_extra_name': 'Торты на заказ', 'salary_extra': 180, 'cost_house': 130, 'cost_food': 150, 'cost_transport': 50, 'cost_cloth': 50, 'cost_extra_name': 'Трекинг по горам', 'cost_extra': 70},
+        {'name': 'Прораб', 'cash': 390, 'salary': 670, 'salary_extra_name': 'Сбыт цемента', 'salary_extra': 70, 'cost_house': 170, 'cost_food': 120, 'cost_transport': 20, 'cost_cloth': 30, 'cost_extra_name': 'Чтение журналов', 'cost_extra': 10},
+        {'name': 'Инженер', 'cash': 400, 'salary': 800, 'salary_extra_name': 'Фриланс', 'salary_extra': 100, 'cost_house': 190, 'cost_food': 160, 'cost_transport': 50, 'cost_cloth': 50, 'cost_extra_name': 'Настольные игры', 'cost_extra': 50},
+        {'name': 'Таксист', 'cash': 410, 'salary': 790, 'salary_extra_name': 'Доставка еды', 'salary_extra': 120, 'cost_house': 150, 'cost_food': 140, 'cost_transport': 130, 'cost_cloth': 30, 'cost_extra_name': 'Компьютерные игры', 'cost_extra': 50}
+    ],
+
+    'lvl3': [
+        {'name': 'Редактор журнала', 'cash': 420, 'salary': 780, 'salary_extra_name': 'Каналы в соцсетях', 'salary_extra': 190, 'cost_house': 230, 'cost_food': 140, 'cost_transport': 110, 'cost_cloth': 30, 'cost_extra_name': 'Фитнес', 'cost_extra': 40},
+        {'name': 'Маркетолог', 'cash': 430, 'salary': 770, 'salary_extra_name': 'Реклама в соцсетях', 'salary_extra': 160, 'cost_house': 240, 'cost_food': 140, 'cost_transport': 80, 'cost_cloth': 40, 'cost_extra_name': 'Прогулки по парку', 'cost_extra': 0},
+        {'name': 'Инспектор ГАИ', 'cash': 440, 'salary': 640, 'salary_extra_name': 'Взятки', 'salary_extra': 300, 'cost_house': 250, 'cost_food': 170, 'cost_transport': 40, 'cost_cloth': 30, 'cost_extra_name': 'Кроссоврды', 'cost_extra': 10},
+        {'name': 'Пилот авиалиний', 'cash': 450, 'salary': 800, 'salary_extra_name': 'Билеты по блату', 'salary_extra': 200, 'cost_house': 300, 'cost_food': 120, 'cost_transport': 40, 'cost_cloth': 60, 'cost_extra_name': 'Мини-футбол', 'cost_extra': 30},
+        {'name': 'Хирург', 'cash': 460, 'salary': 1060, 'salary_extra_name': 'Была бы возможность', 'salary_extra': 0, 'cost_house': 280, 'cost_food': 120, 'cost_transport': 60, 'cost_cloth': 60, 'cost_extra_name': 'Подледная рыбалка', 'cost_extra': 80},
+        {'name': 'Шеф-повар', 'cash': 470, 'salary': 770, 'salary_extra_name': 'Фуд-тренинги', 'salary_extra': 250, 'cost_house': 310, 'cost_food': 130, 'cost_transport': 30, 'cost_cloth': 40, 'cost_extra_name': 'Астрономия', 'cost_extra': 40},
+        {'name': 'Риэлтор', 'cash': 480, 'salary': 480, 'salary_extra_name': 'Продажа щенков', 'salary_extra': 600, 'cost_house': 290, 'cost_food': 120, 'cost_transport': 100, 'cost_cloth': 50, 'cost_extra_name': 'Кино', 'cost_extra': 40},
+        {'name': 'Прокурор', 'cash': 490, 'salary': 890, 'salary_extra_name': 'Домашняя пасека', 'salary_extra': 250, 'cost_house': 270, 'cost_food': 160, 'cost_transport': 50, 'cost_cloth': 70, 'cost_extra_name': 'Пейнтбол', 'cost_extra': 100},
+        {'name': 'Военный', 'cash': 500, 'salary': 850, 'salary_extra_name': 'Было бы время', 'salary_extra': 0, 'cost_house': 50, 'cost_food': 100, 'cost_transport': 50, 'cost_cloth': 50, 'cost_extra_name': 'Охота', 'cost_extra': 100},
+        {'name': 'Разработчик видеоигр', 'cash': 600, 'salary': 850, 'salary_extra_name': 'Ремонт компьютеров', 'salary_extra': 250, 'cost_house': 100, 'cost_food': 200, 'cost_transport': 30, 'cost_cloth': 30, 'cost_extra_name': 'Видеогры', 'cost_extra': 140},
+        {'name': 'Адвокат', 'cash': 700, 'salary': 1000, 'salary_extra_name': 'Частные консультации', 'salary_extra': 300, 'cost_house': 300, 'cost_food': 150, 'cost_transport': 30, 'cost_cloth': 100, 'cost_extra_name': 'Картинг', 'cost_extra': 20},
+        {'name': 'Технический директор', 'cash': 800, 'salary': 1450, 'salary_extra_name': 'Дел невпроворот', 'salary_extra': 0, 'cost_house': 300, 'cost_food': 150, 'cost_transport': 30, 'cost_cloth': 150, 'cost_extra_name': 'Что? Где? Когда?', 'cost_extra': 20},
+        {'name': 'Брокер ', 'cash': 900, 'salary': 1100, 'salary_extra_name': 'Реклама в соцсетях', 'salary_extra': 300, 'cost_house': 200, 'cost_food': 120, 'cost_transport': 90, 'cost_cloth': 80, 'cost_extra_name': 'Рафтинг', 'cost_extra': 10},
+        {'name': 'Программист', 'cash': 1000, 'salary': 1050, 'salary_extra_name': 'Фриланс', 'salary_extra': 500, 'cost_house': 150, 'cost_food': 170, 'cost_transport': 60, 'cost_cloth': 70, 'cost_extra_name': 'Альпинизм', 'cost_extra': 100},
+        {'name': 'Банкир', 'cash': 1100, 'salary': 1000, 'salary_extra_name': 'Все хотели бы знать', 'salary_extra': 750, 'cost_house': 200, 'cost_food': 150, 'cost_transport': 30, 'cost_cloth': 70, 'cost_extra_name': 'Покер', 'cost_extra': 200},
+        {'name': 'Проститутка', 'cash': 1200, 'salary': 1000, 'salary_extra_name': 'Курсы сексолога', 'salary_extra': 600, 'cost_house': 130, 'cost_food': 100, 'cost_transport': 20, 'cost_cloth': 70, 'cost_extra_name': 'Кулинарные шедевры', 'cost_extra': 80}
+    ]
+}

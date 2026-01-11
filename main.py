@@ -61,7 +61,6 @@ def welcome2(message):
     #markup.add(InlineKeyboardButton('Повар', callback_data='test'))
     bot.send_message(message.chat.id, c.TEXT_WELCOME3, reply_markup=markup)
 
-
 @bot.callback_query_handler(func=lambda callback:True)
 def callback_messagge(callback):
     if callback.data == 'welcome':
@@ -70,7 +69,27 @@ def callback_messagge(callback):
 
     elif callback.data == 'new_game':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        ng.new_game_choise(callback.message)
+
+    elif callback.data == 'new_game_blanc':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
         ng.new_game(callback.message)
+
+    elif callback.data == 'new_game_base':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        ng.new_game(callback.message, True)
+
+    elif callback.data == 'new_game_list1':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        ng.new_game_list(callback.message, 'lvl1')
+
+    elif callback.data == 'new_game_list2':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        ng.new_game_list(callback.message, 'lvl2')
+
+    elif callback.data == 'new_game_list3':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        ng.new_game_list(callback.message, 'lvl3')
 
     elif callback.data == 'continue_game':
         if d.DAO.bd_task(d.DAO.get_user, callback.message.chat.id):
@@ -79,7 +98,7 @@ def callback_messagge(callback):
         else:
             bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
             bot.send_message(callback.message.chat.id, c.TEXT_WELCOME5)
-            ng.new_game(callback.message)
+            ng.new_game_choise(callback.message)
 
     elif callback.data == 'test':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
@@ -101,6 +120,10 @@ def callback_messagge(callback):
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
         hg.curr_poll = hg.about_bot(callback.message, hg.curr_poll)
 
+    elif callback.data in [el['name'] for lvl in c.PROFESSIONS.items() for el in lvl[1]]:
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        ng.new_game_setup(callback.message, callback.data)
+
 
 @bot.message_handler(content_types=['text'])
 def check_menu_game(message):
@@ -119,6 +142,6 @@ while True:
     try:
         bot.polling(none_stop=True)
     except Exception as e:
-        print('Произошла ошибка:', e)
+        #print('Произошла ошибка:', e)
         u.logging.info(f'Ошибка polling. ', f'Error: {e}')
         continue
