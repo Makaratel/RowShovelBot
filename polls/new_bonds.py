@@ -28,7 +28,7 @@ def get_paper_cost(message, user, papers):
 
 def get_paper_quantity(message, user, papers):
     input_res = u.get_input(message, 'int', c.ERROR1, get_paper_quantity)
-    papers['кол-во'] = input_res
+    papers['количество'] = input_res
     bot.register_next_step_handler(message, get_paper_kupon, user, papers)
     bot.send_message(message.chat.id, c.PAPERS_4)
 
@@ -44,14 +44,14 @@ def get_paper_time(message, user, papers):
     get_paper(message, user, papers)
 
 def get_paper(message, user, papers):
-    papers['стоимость'] = papers['цена'] * papers['кол-во']
+    papers['стоимость'] = papers['цена'] * papers['количество']
 
     if papers['стоимость'] <= user.cash:
         user.bonds.append(papers)
         d.DAO.bd_task(d.DAO.set_bonds, message.chat.id, str(user.bonds))
         d.DAO.bd_task(d.DAO.set_cash, message.chat.id, user.cash - papers['стоимость'])
-        d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income + (papers['купон'] * papers['кол-во']))
-        d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow + (papers['купон'] * papers['кол-во']))
+        d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income + (papers['купон'] * papers['количество']))
+        d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow + (papers['купон'] * papers['количество']))
         bot.send_message(message.chat.id, c.BUY_2)
     else:
         bot.send_message(message.chat.id, c.BUY_1)
