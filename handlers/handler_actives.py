@@ -46,9 +46,6 @@ def check_menu_actives(message):
         btn.menu_setter(message, btn.set_main_menu)
 
     #Меню покупки актива
-    elif 'бизнес' in message.text.lower():
-        btn.menu_setter(message, btn.set_menu_business)
-
     elif 'малый бизнес' in message.text.lower():
         nb.new_business(message, 'малый бизнес')
 
@@ -57,6 +54,9 @@ def check_menu_actives(message):
 
     elif 'крупный бизнес' in message.text.lower():
         nb.new_business(message, 'крупный бизнес')
+
+    elif 'бизнес' in message.text.lower():
+        btn.menu_setter(message, btn.set_menu_business)
 
     elif 'биржа' in message.text.lower():
         btn.menu_setter(message, btn.set_menu_trade)
