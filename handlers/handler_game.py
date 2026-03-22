@@ -1,11 +1,12 @@
-import constants as c
+import config.constants as c
+import config.settings as s
 import utilites as u
 import polls.new_game as ng
 import menu as btn
 import clases.Person as p
 import clases.DAO as d
 from telebot import types
-from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
+from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton, ReplyKeyboardRemove
 
 bot = None
 curr_poll = None
@@ -28,7 +29,7 @@ def check_menu_game(message):
 
     elif 'сообщество' in message.text.lower():
         markup = types.InlineKeyboardMarkup()
-        markup.add(types.InlineKeyboardButton('Перейти в сообщество', url=c.LINK_VK))
+        markup.add(types.InlineKeyboardButton('Перейти в сообщество', url=s.LINK_VK))
         bot.send_message(message.chat.id, 'Переходите и подписывайтесь на нашу группу VK', reply_markup=markup)
         btn.menu_setter(message, btn.set_main_menu)
 
@@ -37,7 +38,7 @@ def check_menu_game(message):
         curr_poll = 3
         curr_poll = about_bot(message, curr_poll)
 
-    elif 'завершить месяц' in message.text.lower():
+    elif 'получить прибыль' in message.text.lower():
         end_turn(message)
 
     elif 'балансовая ведомость' in message.text.lower():
@@ -49,15 +50,15 @@ def check_menu_game(message):
         btn.menu_setter(message, btn.set_menu_world)
 
     elif 'мир бедных' in message.text.lower():
-        set_world(message, c.WORLD1.lower())
+        set_world(message, s.WORLD1.lower())
         btn.menu_setter(message, btn.set_main_menu)
         
     elif 'мир среднего класса' in message.text.lower():
-        set_world(message, c.WORLD2.lower())
+        set_world(message, s.WORLD2.lower())
         btn.menu_setter(message, btn.set_main_menu)
 
     elif 'мир богатых' in message.text.lower():
-        set_world(message, c.WORLD3.lower())
+        set_world(message, s.WORLD3.lower())
         btn.menu_setter(message, btn.set_main_menu)
     
     elif 'главное меню' in message.text.lower():
@@ -75,8 +76,8 @@ def set_world(message, world):
     if user.world == world:
         bot.send_message(message.chat.id, f'Вы уже находитесь в {world_ob}')
     else:
-        d.DAO.bd_task(d.DAO.set_total_outcome, message.chat.id, user.total_outcome - user.childs * c.WORLDS_KOEFS[user.world] + user.childs * c.WORLDS_KOEFS[world])
-        d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow + user.childs * c.WORLDS_KOEFS[user.world] - user.childs * c.WORLDS_KOEFS[world])
+        d.DAO.bd_task(d.DAO.set_total_outcome, message.chat.id, user.total_outcome - user.childs * s.WORLDS_KOEFS[user.world] + user.childs * s.WORLDS_KOEFS[world])
+        d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow + user.childs * s.WORLDS_KOEFS[user.world] - user.childs * s.WORLDS_KOEFS[world])
         d.DAO.bd_task(d.DAO.set_world, message.chat.id, world)
         bot.send_message(message.chat.id, f'Вы перешли в {world.capitalize()}')
 
@@ -139,20 +140,20 @@ def check_world_conditions(message, user):
     else:
         check_world = 'мир бедных'
     
-    if c.WORLDS_KOEFS[user.world] < c.WORLDS_KOEFS[check_world]:
+    if s.WORLDS_KOEFS[user.world] < s.WORLDS_KOEFS[check_world]:
         bot.send_message(message.chat.id, f'Вы выполнили условия перехода в новый мир. Перейдите в {check_world.capitalize()}!')
 
-    if c.WORLDS_KOEFS[user.world] > c.WORLDS_KOEFS[check_world]:
+    if s.WORLDS_KOEFS[user.world] > s.WORLDS_KOEFS[check_world]:
         bot.send_message(message.chat.id, f'Вы более не выполняете условиям текущего мира. Перейдите в {check_world.capitalize()}!')
 
 def about_bot(message, curr_poll):
     if curr_poll == 3:
-        file = open(c.IMG_MENU, 'rb')
+        file = open(s.IMG_MENU, 'rb')
         markup = InlineKeyboardMarkup()
         markup.add(InlineKeyboardButton('Далее', callback_data='next'))
         bot.send_photo(message.chat.id, file, caption = c.ABOUT_2, parse_mode='HTML', reply_markup=markup)
     elif curr_poll == 2:
-        file = open(c.IMG_MAP, 'rb')
+        file = open(s.IMG_MAP, 'rb')
         markup = InlineKeyboardMarkup()
         markup.add(InlineKeyboardButton('Далее', callback_data='next'))
         bot.send_photo(message.chat.id, file, caption = c.ABOUT_3, parse_mode='HTML', reply_markup=markup)

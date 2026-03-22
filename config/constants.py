@@ -1,17 +1,7 @@
+import config.settings as s
 from telebot.types import ReplyKeyboardRemove
 
-#general constants
-DB_PATH = 'data/my_data.sql'
 MARKUP_NULL = ReplyKeyboardRemove(True)
-
-#image constants
-IMG_WELCOME = 'src/start_img.jpg'
-IMG_MENU = 'src/menu.jpg'
-IMG_MAP = 'src/btn_map.jpg'
-IMG_FIELD = 'src/field_map.jpg'
-
-#link concstants
-LINK_VK = 'https://vk.com/qworld_shop?from=groups'
 
 #query
 BD_COLUMNS = '''chat_id, user_id, profession, gender, world, marriage, childs, wishes, turn, salary, salary_extra_name, salary_extra, 
@@ -20,30 +10,6 @@ BD_COLUMNS = '''chat_id, user_id, profession, gender, world, marriage, childs, w
 BD_MOK_VALUES = '?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?'
 BD_BLANC_PARAMS = ['', '', 'мир бедных', 0, 0, 0, 0, 0, 'доп. заработок', 0, 0, 0, 0, 0, 'доп. расходы', 0, 0, 0, 0, 0, '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', 0, 0, 0]
 BD_TEST_USER = [1, 1, 'повар', 'мужской', 'мир бедных', False, 2, 0, 1, 200, 'ставки', 30, 10, 10, 10, 10, 'бассейн', 10, 230, 50, 100, 20, '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', '[]', 0, 0, 0]
-
-#game constants
-WORLD1 = 'Мир бедных'
-WORLD2 = 'Мир среднего класса'
-WORLD3 = 'Мир богатых'
-
-WORLDS_KOEFS = {
-    WORLD1.lower(): 1,
-    WORLD2.lower(): 10,
-    WORLD3.lower(): 100
-}
-
-COST_WEDDING = 5000
-COST_CHILD = 200
-COST_ABORTION = 10000
-
-MAX_DEBT = 10000
-DEPOSIT_KEY_VALUE = 300
-
-SPEND_AUTO = 0.05
-SPEND_FLAT = 0.05
-SPEND_MAISON = 0.02
-SPEND_YACHT = 0.02
-SPEND_FLIGHT = 0.02
 
 #text constants
 TEXT_WELCOME = '🖖Греби лопатой Assistent приветствует Вас, '
@@ -61,7 +27,7 @@ TEXT_WELCOME7 = 'Выберите уровень дохода стандартн
 TEXT_WELCOME8 = 'Выберите базовую профессию.'
 
 BALANCE_Q1 = '🔧 Введите вашу профессию'
-BALANCE_Q2 = '🚻 Введите пол персонажа (мужской/женский)'
+BALANCE_Q2 = '🚻 Выберите пол персонажа'
 BALANCE_Q3 = '💵 Введите количество наличных'
 BALANCE_Q4 = '💳 Введите вашу зарплату'
 BALANCE_Q5 = '🧮 Введите название статьи ваших дополнительных доходов'
@@ -109,7 +75,7 @@ BALANCE_25 = '💳 Кредиты:'
 BALANCE_26 = '⭕ Долги:'
 DELIMETER = '-----------------------------------'
 
-BUSINESS_1 = 'Вначале продайте бизнесы другого уровня!'
+BUSINESS_1 = 'Сначала продайте бизнесы другого уровня!'
 BUSINESS_2 = 'Введите название бизнеса'
 BUSINESS_3 = 'Введите стоимость бизнеса'
 BUSINESS_4 = 'Введите доход от бизнеса'
@@ -122,15 +88,16 @@ BUY_3 = 'Поздравляем с продажей!'
 BUY_4 = 'Введите порядковый номер актива'
 BUY_5 = 'Актива с таким порядковым номером не существует!'
 BUY_6 = 'Значение актива изменено'
+BUY_7 = 'Введите цену продажи актива'
 
 PAPERS_1 = 'Введите тикер бумаги'
 PAPERS_2 = 'Введите цену покупки бумаги'
 PAPERS_3 = 'Введите количество покупаемых бумаг'
 PAPERS_4 = 'Введите купон облигации'
 PAPERS_5 = 'Введите срок действия'
-PAPERS_6 = f'Введите сумму вклада (кратную {DEPOSIT_KEY_VALUE})'
+PAPERS_6 = f'Введите сумму вклада (кратную {s.DEPOSIT_KEY_VALUE})'
 PAPERS_7 = 'Введите ставку по вкладу'
-PAPERS_8 = f'Сумма депозита не кратна {DEPOSIT_KEY_VALUE}'
+PAPERS_8 = f'Сумма депозита не кратна {s.DEPOSIT_KEY_VALUE}'
 
 ACTIVE_1 = 'Введите название актива'
 ACTIVE_2 = 'Введите стоимость актива'

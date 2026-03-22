@@ -3,7 +3,7 @@ import os
 from os.path import join, dirname
 import logging
 from datetime import date
-import constants as c
+import config.constants as c
 import clases.DAO as d
 
 bot = None

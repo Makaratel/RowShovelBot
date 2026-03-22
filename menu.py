@@ -1,5 +1,5 @@
 from telebot.types import ReplyKeyboardMarkup, KeyboardButton
-import constants as c
+import config.constants as c
 import clases.DAO as d
 
 bot = None
@@ -29,12 +29,12 @@ def set_buttons(row_width, buttons, message):
     bot.send_message(message.chat.id, c.ACTION1, reply_markup=markup)
     
 def set_main_menu(message):
-    markup = ReplyKeyboardMarkup(row_width=2, input_field_placeholder='Выберите действие')
+    markup = ReplyKeyboardMarkup(row_width=2, input_field_placeholder='Выберите действие', resize_keyboard=True,)
     btn1 = KeyboardButton('🎲 Меню игры ☰')
     btn2 = KeyboardButton('💸 Операции с наличкой ☰')
     btn3 = KeyboardButton('🗂️ Операции с активами ☰')
     btn4 = KeyboardButton('🔮 Жизненные ситуации ☰')
-    btn5 = KeyboardButton('⌛ Завершить месяц')
+    btn5 = KeyboardButton('⌛ Получить прибыль')
     btn6 = KeyboardButton('💹 Мои активы')
     btn7 = KeyboardButton('📝 Балансовая ведомость')
 

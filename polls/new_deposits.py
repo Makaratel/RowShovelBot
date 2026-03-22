@@ -1,4 +1,5 @@
-import constants as c
+import config.constants as c
+import config.settings as s
 import utilites as u
 import menu as btn
 import clases.DAO as d
@@ -35,8 +36,8 @@ def get_deposit(message, user, deposit):
         user.deposits.append(deposit)
         d.DAO.bd_task(d.DAO.set_deposits, message.chat.id, str(user.deposits))
         d.DAO.bd_task(d.DAO.set_cash, message.chat.id, user.cash - deposit['сумма'])
-        d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income + (deposit['сумма'] * deposit['ставка'] / c.DEPOSIT_KEY_VALUE))
-        d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow + (deposit['сумма'] * deposit['ставка'] / c.DEPOSIT_KEY_VALUE))
+        d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income + (deposit['сумма'] * deposit['ставка'] / s.DEPOSIT_KEY_VALUE))
+        d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow + (deposit['сумма'] * deposit['ставка'] / s.DEPOSIT_KEY_VALUE))
         bot.send_message(message.chat.id, c.BUY_2)
     else:
         bot.send_message(message.chat.id, c.BUY_1)

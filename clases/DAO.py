@@ -1,5 +1,6 @@
 import sqlite3
-import constants as c
+import config.constants as c
+import config.settings as s
 import utilites as u
 
 class DAO:
@@ -9,7 +10,7 @@ class DAO:
     @staticmethod
     def bd_task(func, chat_id = None, value = None, user_id = None):
         try:
-            conn = sqlite3.connect(c.DB_PATH)
+            conn = sqlite3.connect(s.DB_PATH)
             cursor = conn.cursor()
 
             if chat_id == None:

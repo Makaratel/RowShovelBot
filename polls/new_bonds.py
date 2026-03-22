@@ -1,4 +1,4 @@
-import constants as c
+import config.constants as c
 import utilites as u
 import menu as btn
 import clases.DAO as d
@@ -17,20 +17,25 @@ def new_bonds(message):
 def get_ticker(message, user, papers):
     input_res = u.get_input(message, 'str', c.PAPERS_2, get_ticker)
     papers['тикер'] = input_res
-    bot.register_next_step_handler(message, get_paper_cost, user, papers)
-    bot.send_message(message.chat.id, c.PAPERS_2)
-
-def get_paper_cost(message, user, papers):
-    input_res = u.get_input(message, 'int', c.PAPERS_3, get_paper_cost)
-    papers['цена'] = input_res
     bot.register_next_step_handler(message, get_paper_quantity, user, papers)
     bot.send_message(message.chat.id, c.PAPERS_3)
 
 def get_paper_quantity(message, user, papers):
     input_res = u.get_input(message, 'int', c.ERROR1, get_paper_quantity)
     papers['количество'] = input_res
-    bot.register_next_step_handler(message, get_paper_kupon, user, papers)
-    bot.send_message(message.chat.id, c.PAPERS_4)
+    bot.register_next_step_handler(message, get_paper_cost, user, papers)
+    bot.send_message(message.chat.id, c.PAPERS_2)
+
+def get_paper_cost(message, user, papers):
+    input_res = u.get_input(message, 'int', c.PAPERS_3, get_paper_cost)
+    papers['цена'] = input_res
+
+    if user.cash >= papers['цена'] * papers['количество']:
+        bot.register_next_step_handler(message, get_paper_kupon, user, papers)
+        bot.send_message(message.chat.id, c.PAPERS_4)
+    else:
+        bot.send_message(message.chat.id, c.BUY_1)
+        btn.menu_setter(message, btn.set_main_menu) 
 
 def get_paper_kupon(message, user, papers):
     input_res = u.get_input(message, 'int', c.ERROR1, get_paper_kupon)

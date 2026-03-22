@@ -1,5 +1,5 @@
 import prettytable as pt
-import constants as c
+import config.constants as c
 import menu as btn
 import utilites as u
 
@@ -116,7 +116,9 @@ def print_actives(message):
         res += f'{title}<pre>{table}</pre>'
 
     if res != '': bot.send_message(message.chat.id, res, parse_mode='HTML')
-    if res == '': bot.send_message(message.chat.id, 'У вас еще нет активов!')
+    if res == '': 
+        bot.send_message(message.chat.id, 'У вас еще нет активов!')
+        btn.menu_setter(message, btn.set_main_menu)
     return res
 
 def sell_active(message):
@@ -125,16 +127,21 @@ def sell_active(message):
     group_actives = u.find_group_actives(user, input_res)
 
     if group_actives and group_actives['values']:
-        my_active = group_actives['values'][group_actives['index']]
-        d.DAO.bd_task(d.DAO.set_cash, message.chat.id, user.cash + int(my_active.get('стоимость', 0)))
-        d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income - my_active.get('прибыль', 0))
-        d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow - my_active.get('прибыль', 0))
-        group_actives['values'].pop(group_actives['index'])
-        new_group_actives = str(group_actives['values'])
-        d.DAO.bd_task(group_actives['setter_str'], message.chat.id, new_group_actives)
-        bot.send_message(message.chat.id, c.BUY_3)
-        btn.menu_setter(message, btn.set_main_menu)
+        bot.register_next_step_handler(message, sell_active_with_cost, group_actives, user)
+        bot.send_message(message.chat.id, c.BUY_7, reply_markup=c.MARKUP_NULL)
+        
+def sell_active_with_cost(message, group_actives, user):
+    input_res = u.get_input(message, 'int', c.BUY_7, sell_active)
+    my_active = group_actives['values'].pop(group_actives['index'])
+    new_group_actives = str(group_actives['values'])
 
+    d.DAO.bd_task(d.DAO.set_cash, message.chat.id, user.cash + input_res * int(my_active.get('количество', 1)))
+    d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income - my_active.get('прибыль', 0))
+    d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow - my_active.get('прибыль', 0))
+    d.DAO.bd_task(group_actives['setter_str'], message.chat.id, new_group_actives)
+    bot.send_message(message.chat.id, c.BUY_3)
+    btn.menu_setter(message, btn.set_main_menu)
+    
 def bankruptcy(message):
     user = p.Person.get_data(message.chat.id)
     

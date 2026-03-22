@@ -1,4 +1,4 @@
-import constants as c
+import config.constants as c
 import utilites as u
 import menu as btn
 import clases.DAO as d
@@ -22,9 +22,14 @@ def get_name(message, user, active):
 
 def get_cost(message, user, active):
     input_res = u.get_input(message, 'int', c.ERROR1, get_cost)
-    active['стоимость'] = input_res
-    get_chalets(message, user, active)
 
+    if input_res <= user.cash:
+        active['стоимость'] = input_res
+        get_chalets(message, user, active)
+    else:
+        bot.send_message(message.chat.id, c.BUY_1)
+        btn.menu_setter(message, btn.set_main_menu)
+    
 def get_chalets(message, user, active):
     user.chalets.append(active)
     d.DAO.bd_task(d.DAO.set_chalets, message.chat.id, str(user.chalets))

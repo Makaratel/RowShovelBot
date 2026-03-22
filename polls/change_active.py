@@ -1,4 +1,4 @@
-import constants as c
+import config.constants as c
 import utilites as u
 import menu as btn
 import clases.DAO as d

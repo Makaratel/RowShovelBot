@@ -1,4 +1,4 @@
-import constants as c
+import config.constants as c
 import menu as btn
 import utilites as u
 import clases.Person as p

@@ -1,4 +1,5 @@
-import constants as c
+import config.constants as c
+import config.settings as s
 import utilites as u
 import clases.DAO as d
 import clases.Person as p
@@ -14,15 +15,9 @@ def set_property(message, type, bd_callback, next_step = '', text = '', is_end =
         bot.register_next_step_handler(message, next_step)
         bot.send_message(message.chat.id, text)
 
-def new_game_choise(message):
-    markup = InlineKeyboardMarkup()
-    markup.add(InlineKeyboardButton('Выбрать базовую ведомость', callback_data='new_game_base'))
-    markup.add(InlineKeyboardButton('Создать новую ведомость', callback_data='new_game_blanc'))
-    bot.send_message(message.chat.id, c.TEXT_WELCOME6, reply_markup=markup)
-
-def new_game(message, isBase = False):
+def new_game(message):
     d.DAO.bd_task(d.DAO.create_user, message.chat.id, user_id = message.from_user.id)
-    d.DAO.bd_task(d.DAO.set_world, message.chat.id, c.WORLD1.lower())
+    d.DAO.bd_task(d.DAO.set_world, message.chat.id, s.WORLD1.lower())
     d.DAO.bd_task(d.DAO.set_marriage, message.chat.id, False)
     d.DAO.bd_task(d.DAO.set_childs, message.chat.id, 0)
     d.DAO.bd_task(d.DAO.set_wishes, message.chat.id, 0)
@@ -42,30 +37,27 @@ def new_game(message, isBase = False):
     d.DAO.bd_task(d.DAO.set_yachts, message.chat.id, '[]')
     d.DAO.bd_task(d.DAO.set_flies, message.chat.id, '[]')
     d.DAO.bd_task(d.DAO.set_mansions, message.chat.id, '[]')
-    
-    if isBase == False: 
+
+    markup = InlineKeyboardMarkup()
+    markup.add(InlineKeyboardButton('Мужской', callback_data='gender_man'))
+    markup.add(InlineKeyboardButton('Женский', callback_data='gender_woman'))
+    bot.send_message(message.chat.id, c.BALANCE_Q2, reply_markup=markup)
+
+def new_game_choise(message):
+    markup = InlineKeyboardMarkup()
+    markup.add(InlineKeyboardButton('Выбрать базовую ведомость', callback_data='new_game_base'))
+    markup.add(InlineKeyboardButton('Создать новую ведомость', callback_data='new_game_blanc'))
+    bot.send_message(message.chat.id, c.TEXT_WELCOME6, reply_markup=markup)
+
+def new_game_start(message, isBase):
+    if isBase == True:
+        new_game_base(message)
+    if isBase == False:
         bot.register_next_step_handler(message, set_profession)
-        bot.send_message(message.chat.id, c.BALANCE_Q1, reply_markup=c.MARKUP_NULL)
-    if isBase == True: 
-        bot.register_next_step_handler(message, set_gender, isBase)
-        bot.send_message(message.chat.id, c.BALANCE_Q2, reply_markup=c.MARKUP_NULL)
-    
+        bot.send_message(message.chat.id, c.BALANCE_Q1)
+
 def set_profession(message):
-    set_property(message, 'str', d.DAO.set_profession, set_gender, c.BALANCE_Q2, False, set_profession)
-
-def set_gender(message, isBase = False):
-    input_res = message.text.strip().lower()
-    
-    if input_res in ['мужской', 'женский']:
-        d.DAO.bd_task(d.DAO.set_gender, message.chat.id, input_res)
-
-        if isBase == False:
-            bot.register_next_step_handler(message, set_cash)
-            bot.send_message(message.chat.id, c.BALANCE_Q3)
-        if isBase == True:
-            new_game_base(message)
-    else:
-        u.get_error(message, c.ERROR2, set_gender)
+    set_property(message, 'str', d.DAO.set_profession, set_cash, c.BALANCE_Q3, False, set_profession)
 
 def set_cash(message):
     set_property(message, 'int', d.DAO.set_cash, set_salary, c.BALANCE_Q4, False, set_cash)
@@ -124,6 +116,7 @@ def new_game_list(message, level):
 
     for el in sorted(c.PROFESSIONS[level], key=lambda x: x['name']):
         markup.add(InlineKeyboardButton(el['name'], callback_data=el['name']))
+    markup.add(InlineKeyboardButton('⬅️ К выбору уровня', callback_data='to_back_level_choise'))
     bot.send_message(message.chat.id, c.TEXT_WELCOME8, reply_markup=markup)
 
 def new_game_setup(message, profession_name):

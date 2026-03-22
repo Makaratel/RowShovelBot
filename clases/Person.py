@@ -1,4 +1,5 @@
-import constants as c
+import config.constants as c
+import config.settings as s
 import clases.DAO as d
 
 
@@ -76,7 +77,7 @@ class Person:
             f'{c.DELIMETER}\n' +\
             f'{c.BALANCE_11} <b><i>+{self.total_income}</i></b>\n' +\
             f'{c.BALANCE_12} <b><i>-{self.total_outcome}</i></b>\n' +\
-            f'{c.BALANCE_13} <b><i>{"+" if self.flow >= 0 else ""}{self.flow}</i></b>\n' +\
+            f'{c.BALANCE_13} <b><i>{s.COLOR_TEXT_PROFIT if self.flow >= 0 else s.COLOR_TEXT_WRONG}{"+" if self.flow >= 0 else ""}{self.flow}{s.COLOR_TEXT_CLOSE}</i></b>\n' +\
             f'{c.BALANCE_3} <b><i>{self.cash}</i></b>\n' +\
             f'{c.BALANCE_26} <b><i>-{self.debt}</i></b>'
         return res

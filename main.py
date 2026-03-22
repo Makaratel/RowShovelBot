@@ -3,7 +3,8 @@ import telebot
 from telebot.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 #стандартные модули проекта
-import constants as c
+import config.constants as c
+import config.settings as s
 import menu as btn
 import utilites as u
 
@@ -35,19 +36,19 @@ import polls.new_profession as np
 
 class BotExceptionHandler(telebot.ExceptionHandler):
     def handle(self, exception):
-        print('Произошла ошибка:', exception)
-        u.logging.warning(f'Ошибка polling. ', f'Error: {exception}')
+        #print('Произошла ошибка:', exception)
+        #u.logging.warning(f'Ошибка polling. ', f'Error: {exception}')
         return True
 
 bot = telebot.TeleBot(u.get_from_env('TG_TOKEN'), exception_handler=BotExceptionHandler())
 #bot = telebot.TeleBot(u.get_from_env('TG_TOKEN'))
 u.bot = btn.bot = hg.bot = hc.bot = hl.bot = ha.bot = ng.bot = nb.bot = ca.bot = ns.bot = nbnds.bot = nd.bot = na.bot = nf.bot = ny.bot = nm.bot = nfl.bot = nl.bot = nc.bot = np.bot = bot
-hg.curr_poll = curr_poll = None
+#hg.curr_poll = curr_poll = None
 d.DAO.bd_task(d.DAO.create_table)
 
 @bot.message_handler(commands=['start'])
 def welcome(message):
-    file = open(c.IMG_WELCOME, 'rb')
+    file = open(s.IMG_WELCOME, 'rb')
     text =  c.TEXT_WELCOME + f'{message.from_user.first_name}!' + c.TEXT_WELCOME2
     markup = InlineKeyboardMarkup()
     markup.add(InlineKeyboardButton('Подробнее', callback_data='welcome'))
@@ -69,15 +70,25 @@ def callback_messagge(callback):
 
     elif callback.data == 'new_game':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        ng.new_game(callback.message)
+
+    elif callback.data == 'gender_man':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        d.DAO.bd_task(d.DAO.set_gender, callback.message.chat.id, 'мужской')
+        ng.new_game_choise(callback.message)
+
+    elif callback.data == 'gender_woman':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        d.DAO.bd_task(d.DAO.set_gender, callback.message.chat.id, 'женский')
         ng.new_game_choise(callback.message)
 
     elif callback.data == 'new_game_blanc':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
-        ng.new_game(callback.message)
+        ng.new_game_start(callback.message, False)
 
     elif callback.data == 'new_game_base':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
-        ng.new_game(callback.message, True)
+        ng.new_game_start(callback.message, True)
 
     elif callback.data == 'new_game_list1':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
@@ -90,6 +101,10 @@ def callback_messagge(callback):
     elif callback.data == 'new_game_list3':
         bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
         ng.new_game_list(callback.message, 'lvl3')
+
+    elif callback.data == 'to_back_level_choise':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
+        ng.new_game_start(callback.message, True)
 
     elif callback.data == 'continue_game':
         if d.DAO.bd_task(d.DAO.get_user, callback.message.chat.id):
@@ -107,6 +122,7 @@ def callback_messagge(callback):
         btn.menu_setter(callback.message, btn.set_main_menu)
 
     elif callback.data == 'set_balance':
+        bot.edit_message_reply_markup(callback.message.chat.id, message_id=callback.message.message_id, reply_markup='')
         user = p.Person.get_data(callback.message.chat.id)
         bot.send_message(callback.message.chat.id, user.text_balance(), parse_mode='HTML')
         btn.menu_setter(callback.message, btn.set_main_menu)
@@ -137,11 +153,12 @@ def check_menu_game(message):
         bot.send_message(message.chat.id, 'я есть грут', message_effect_id=5107584321108051014)
     elif all([m1, m2, m3, m4]):
         bot.send_message(message.chat.id, 'Такой команды не существует! Попробуйте вновь.')
+        btn.menu_setter(message, btn.set_main_menu)
     
 while True:
     try:
         bot.polling(none_stop=True)
     except Exception as e:
         #print('Произошла ошибка:', e)
-        u.logging.info(f'Ошибка polling. ', f'Error: {e}')
+        #u.logging.info(f'Ошибка polling. ', f'Error: {e}')
         continue
