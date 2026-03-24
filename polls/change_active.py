@@ -18,23 +18,23 @@ def get_id(message, user, change):
     if group_actives is not None:
         change['id'] = input_res
         bot.send_message(message.chat.id, 'Введите параметр для изменения')
-        bot.register_next_step_handler(message, get_property, group_actives, change)
+        bot.register_next_step_handler(message, get_property, group_actives, change, user)
     else:
         bot.send_message(message.chat.id, c.BUY_5)
         btn.menu_setter(message, btn.set_main_menu)
 
-def get_property(message, group_actives, change):
+def get_property(message, group_actives, change, user):
     input_res = u.get_input(message, 'str', c.ERROR1, get_id)
 
     if input_res in group_actives['values'][group_actives['index']].keys() and input_res != 'id':
         change['property'] = input_res
         bot.send_message(message.chat.id, 'Введите значение параметра для изменения')
-        bot.register_next_step_handler(message, get_value, group_actives, change)
+        bot.register_next_step_handler(message, get_value, group_actives, change, user)
     else:
         bot.send_message(message.chat.id, 'Введенный параметр невозможно изменить')
         btn.menu_setter(message, btn.set_main_menu)
 
-def get_value(message, group_actives, change):
+def get_value(message, group_actives, change, user):
     input_res = u.get_input(message, 'else', c.ERROR1, get_value)
     is_int = isinstance(input_res, int)
 
@@ -43,12 +43,21 @@ def get_value(message, group_actives, change):
     else:
         change['value'] = str(input_res)
 
-    set_value(message, group_actives, change)
+    set_value(message, group_actives, change, user)
 
-def set_value(message, group_actives, change):
-    actives = group_actives['values']
-    actives[group_actives['index']][change['property']] = change['value']
-    new_group_actives = str(actives)
-    d.DAO.bd_task(group_actives['setter_str'], message.chat.id, new_group_actives)
+def set_value(message, actives, change, user):
+    active = actives['values']
+
+    if change['property'] == 'прибыль':
+        profit = active[actives['index']][change['property']]
+
+    active[actives['index']][change['property']] = change['value']
+    new_group_actives = str(active)
+
+    if change['property'] == 'прибыль':
+        d.DAO.bd_task(d.DAO.set_total_income, message.chat.id, user.total_income - profit + change['value'])
+        d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow - profit + change['value'])
+
+    d.DAO.bd_task(actives['setter_str'], message.chat.id, new_group_actives)
     bot.send_message(message.chat.id, c.BUY_6)
     btn.menu_setter(message, btn.set_main_menu)

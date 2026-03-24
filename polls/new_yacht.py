@@ -1,4 +1,5 @@
 import config.constants as c
+import config.settings as s
 import utilites as u
 import menu as btn
 import clases.DAO as d
@@ -34,5 +35,11 @@ def get_yacht(message, user, active):
     user.yachts.append(active)
     d.DAO.bd_task(d.DAO.set_yachts, message.chat.id, str(user.yachts))
     d.DAO.bd_task(d.DAO.set_cash, message.chat.id, user.cash - active['стоимость'])
+
+    if user.cost_transport <= 150:
+        d.DAO.bd_task(d.DAO.set_cost_transport, message.chat.id, active['стоимость'] * s.SPEND_YACHT)
+    else:
+        d.DAO.bd_task(d.DAO.set_cost_transport, message.chat.id, user.cost_transport + active['стоимость'] * s.SPEND_YACHT)
+
     bot.send_message(message.chat.id, c.BUY_2)
     btn.menu_setter(message, btn.set_main_menu)

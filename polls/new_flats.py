@@ -1,4 +1,5 @@
 import config.constants as c
+import config.settings as s
 import utilites as u
 import menu as btn
 import clases.DAO as d
@@ -66,5 +67,10 @@ def get_flat(message, user, active):
         d.DAO.bd_task(d.DAO.set_total_outcome, message.chat.id, user.total_outcome + active['платеж'])
         d.DAO.bd_task(d.DAO.set_flow, message.chat.id, user.flow - active['платеж'])
         bot.send_message(message.chat.id, c.BUY_2)
+
+    if user.cost_house <= 400:
+        d.DAO.bd_task(d.DAO.set_cost_house, message.chat.id, active['стоимость'] * s.SPEND_FLAT)
+    else:
+        d.DAO.bd_task(d.DAO.set_cost_house, message.chat.id, user.cost_house + active['стоимость'] * s.SPEND_FLAT)
 
     btn.menu_setter(message, btn.set_main_menu)

@@ -93,7 +93,7 @@ def end_turn(message):
     
     counter_terms(message, user)
     check_world_conditions(message, user)
-    bot.send_message(message.chat.id, f'Ход {user.turn + 1} закончен')
+    bot.send_message(message.chat.id, f'Месяц {user.turn + 1} закончен')
 
     if user.debt > 0:
         bot.send_message(message.chat.id, f'Не забудьте, что у Вас долг {user.debt}!')
